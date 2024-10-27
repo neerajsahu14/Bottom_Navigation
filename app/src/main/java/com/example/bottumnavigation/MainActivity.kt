@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
@@ -57,11 +58,24 @@ class MainActivity : ComponentActivity() {
                     )
                 )
                 var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
+                var searchQuery by rememberSaveable { mutableStateOf("") }
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.inverseOnSurface
                 ) {
                     Scaffold(
+                        topBar = {
+                            TopAppBar(
+                                title = {
+                                    TextField(
+                                        value = searchQuery,
+                                        onValueChange = { searchQuery = it },
+                                        placeholder = { Text("Search...") },
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
+                                }
+                            )
+                        },
                         bottomBar = {
                             NavigationBar {
                                 items.forEachIndexed { index, item ->
